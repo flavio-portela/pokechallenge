@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import { Global } from '@emotion/core';
 import { Provider } from 'react-redux';
-import configureStore from './redux/configureStore';
+import configureStore, { sagaMiddleware } from './redux/configureStore';
+import rootSaga from './redux/sagas';
 import globalStyles from './global.styles';
 
 // Pages
@@ -39,5 +40,7 @@ const App = () => {
     </Provider>
   );
 };
+
+sagaMiddleware.run(rootSaga);
 
 export default App;
