@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styles from './SetCard.styles';
 
 type Props = {
@@ -8,8 +9,9 @@ type Props = {
 };
 
 const SetCard = ({ set, className }: Props) => {
+  const history = useHistory();
   return (
-    <div className={className} css={styles}>
+    <div className={className} css={styles} onClick={() => { history.push(`/cards/${set.code}`)}}>
       <div className="logo">
         <img src={set.logoUrl} alt={`Image for the set ${set.code}`} />
       </div>

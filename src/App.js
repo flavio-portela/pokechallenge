@@ -21,10 +21,7 @@ const App = () => {
           <Route exact path="/">
             <Sets />
           </Route>
-          <Route path="/cards/:id">
-            <Card />
-          </Route>
-          <Route path="/cards">
+          <Route path="/cards/:setId">
             <Cards />
           </Route>
         </Switch>
