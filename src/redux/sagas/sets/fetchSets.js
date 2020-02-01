@@ -7,19 +7,28 @@ import pokemon from '../../../services/pokemon';
 import { setsFetched, type FetchSetsAction } from '../../actions/setsActions';
 import {
   requestSetsPage,
-  setsPageFetched
+  setsPageFetched,
+  setCurrentPageForSets
 } from '../../actions/paginationActions';
 
-import { selectSetsPage } from '../../reducers/pagination';
+import {
+  selectSetsPage,
+  selectSetsCurrentPage
+} from '../../reducers/pagination';
 
 export default function* fetchSets(action: FetchSetsAction): Saga<void> {
   try {
     const { payload } = action;
     const { page } = payload;
 
+    if (page < 1) {
+      yield cancel();
+    }
+
+    yield put(setCurrentPageForSets({ page }));
     // Check if we already have this page
-    const existingPage = yield select(selectSetsPage, page);
-    if (existingPage) {
+    const nextPage = yield select(selectSetsPage, page);
+    if (nextPage) {
       yield cancel();
     }
 

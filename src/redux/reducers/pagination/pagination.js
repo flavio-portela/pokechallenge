@@ -3,10 +3,15 @@ import {
   REQUEST_SET_PAGE,
   type RequestSetPageAction,
   SETS_PAGE_FETCHED,
-  type SetsPageFetchedAction
+  type SetsPageFetchedAction,
+  SET_CURRENT_PAGE_FOR_SETS,
+  type SetCurrentPageForSetAction
 } from '../../actions/paginationActions';
 
-type Action = RequestSetPageAction | SetsPageFetchedAction;
+type Action =
+  | RequestSetPageAction
+  | SetsPageFetchedAction
+  | SetCurrentPageForSetAction;
 
 type SetPage = {|
   ids: Array<string>,
@@ -52,7 +57,7 @@ export default function pagination(
         }
       };
     }
-    case SETS_PAGE_FETCHED:
+    case SETS_PAGE_FETCHED: {
       const { ids, page } = action.payload;
       return {
         ...state,
@@ -66,7 +71,18 @@ export default function pagination(
             }
           }
         }
+      };
+    }
+    case SET_CURRENT_PAGE_FOR_SETS: {
+      const { page } = action.payload;
+      return  {
+        ...state,
+        sets: {
+          ...state.sets,
+          currentPage: page
+        }
       }
+    }
     default:
       return state;
   }

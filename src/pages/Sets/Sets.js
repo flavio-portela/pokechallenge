@@ -24,11 +24,21 @@ const Sets = () => {
 
   return (
     <div css={styles}>
-      {page &&
-        page.ids &&
-        page.ids.map(id => {
-          return <SetCard key={id} className={'setCard'} set={sets[id]} />;
-        })}
+      <div>
+        <button onClick={() => {
+          dispatch(fetchSets({ page: currentPage - 1 }))
+        }}>Previous</button>
+        <button onClick={() => {
+          dispatch(fetchSets({ page: currentPage + 1}))
+        }}>Next</button>
+      </div>
+      <div className='sets'>
+        {page &&
+          page.ids &&
+          page.ids.map(id => {
+            return <SetCard key={id} className={'setCard'} set={sets[id]} />;
+          })}
+      </div>
     </div>
   );
 };

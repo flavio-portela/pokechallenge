@@ -1,6 +1,7 @@
 // @flow
 export const REQUEST_SET_PAGE = 'PAGINATION/REQUEST_SET_PAGE';
 export const SETS_PAGE_FETCHED = 'PAGINATION/SETS_PAGE_FETCHED';
+export const SET_CURRENT_PAGE_FOR_SETS = 'PAGINATION/SET_CURRENT_PAGE_FOR_SETS';
 
 type RequestSetPagePayload = {|
   page: number
@@ -33,6 +34,24 @@ export function setsPageFetched(
 ): SetsPageFetchedAction {
   return {
     type: SETS_PAGE_FETCHED,
+    payload
+  };
+}
+
+type SetCurrentPageForSetPayload = {
+  page: number
+};
+
+export type SetCurrentPageForSetAction = {
+  type: typeof SET_CURRENT_PAGE_FOR_SETS,
+  payload: SetCurrentPageForSetPayload
+};
+
+export function setCurrentPageForSets(
+  payload: SetCurrentPageForSetPayload
+): SetCurrentPageForSetAction {
+  return {
+    type: SET_CURRENT_PAGE_FOR_SETS,
     payload
   };
 }
