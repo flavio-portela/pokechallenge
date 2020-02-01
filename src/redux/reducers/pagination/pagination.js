@@ -1,87 +1,73 @@
 // @flow
 import {
-  REQUEST_SET_PAGE,
-  type RequestSetPageAction,
-  SETS_PAGE_FETCHED,
-  type SetsPageFetchedAction,
-  SET_CURRENT_PAGE_FOR_SETS,
-  type SetCurrentPageForSetAction
+  REQUEST_PAGE,
+  type RequestPageAction,
+  PAGE_FETCHED,
+  type PageFetchedAction,
+  SET_CURRENT_PAGE,
+  type SetCurrentPageAction
 } from '../../actions/paginationActions';
 
-type Action =
-  | RequestSetPageAction
-  | SetsPageFetchedAction
-  | SetCurrentPageForSetAction;
+type Action = RequestPageAction | PageFetchedAction | SetCurrentPageAction;
 
-type SetPage = {|
+type Page = {|
   ids: Array<string>,
-  loading: boolean
+  isLoading: boolean
 |};
 
-type SetPages = {
-  [page: number]: SetPage
+type Pages = {
+  [page: number]: Page
 };
 
-type PaginationState = {|
-  sets: {|
-    currentPage: number,
-    pages: SetPages
-  |}
-|};
+type Pagination = {
+  currentPage: number,
+  pages: Pages
+};
 
-const initialState: PaginationState = {
-  sets: {
-    currentPage: 1,
-    pages: {}
-  }
+type PaginationState = {
+  [search: string]: Pagination
 };
 
 export default function pagination(
-  state: PaginationState = initialState,
+  state: PaginationState = {},
   action: Action
 ) {
   switch (action.type) {
-    case REQUEST_SET_PAGE: {
-      const { page } = action.payload;
+    case REQUEST_PAGE: {
+      const { page, search } = action.payload;
       return {
         ...state,
-        sets: {
-          ...state.sets,
-          pages: {
-            ...state.sets.pages,
-            [page]: {
-              ids: [],
-              loading: true
-            }
+        [search]: {
+          ...state[search],
+          [page]: {
+            ids: [],
+            isLoading: true
           }
         }
       };
     }
-    case SETS_PAGE_FETCHED: {
-      const { ids, page } = action.payload;
+    case PAGE_FETCHED: {
+      const { page, search, ids } = action.payload;
       return {
         ...state,
-        sets: {
-          ...state.sets,
-          pages: {
-            ...state.sets.pages,
-            [page]: {
-              ids,
-              loading: false
-            }
+        [search]: {
+          ...state[search],
+          [page]: {
+            ids,
+            isLoading: false
           }
         }
       };
     }
-    case SET_CURRENT_PAGE_FOR_SETS: {
-      const { page } = action.payload;
-      return  {
+    case SET_CURRENT_PAGE: {
+      const { page, search } = action.payload;
+      return {
         ...state,
-        sets: {
-          ...state.sets,
+        [search]: {
+          ...state[search],
           currentPage: page
         }
-      }
+      };
     }
     default:
       return state;

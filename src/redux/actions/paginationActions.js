@@ -1,57 +1,58 @@
 // @flow
-export const REQUEST_SET_PAGE = 'PAGINATION/REQUEST_SET_PAGE';
-export const SETS_PAGE_FETCHED = 'PAGINATION/SETS_PAGE_FETCHED';
-export const SET_CURRENT_PAGE_FOR_SETS = 'PAGINATION/SET_CURRENT_PAGE_FOR_SETS';
+export const REQUEST_PAGE = 'PAGINATION/REQUEST_PAGE';
+export const PAGE_FETCHED = 'PAGINATION/PAGE_FETCHED';
+export const SET_CURRENT_PAGE = 'PAGINATION/SET_CURRENT_PAGE';
 
-type RequestSetPagePayload = {|
-  page: number
-|};
+type RequestPagePayload = {
+  page: number,
+  search: string
+};
 
-export type RequestSetPageAction = {|
-  type: typeof REQUEST_SET_PAGE,
-  payload: RequestSetPagePayload
-|};
+export type RequestPageAction = {
+  type: typeof REQUEST_PAGE,
+  payload: RequestPagePayload
+};
 
-export function requestSetsPage(payload: RequestSetPagePayload) {
+export function requestPage(payload: RequestPagePayload): RequestPageAction {
   return {
-    type: REQUEST_SET_PAGE,
+    type: REQUEST_PAGE,
     payload
   };
 }
 
-type SetsPageFetchedPayload = {|
-  ids: Array<string>,
-  page: number
-|};
+type PageFetchedPayload = {
+  search: string,
+  page: number,
+  ids: Array<string>
+};
 
-export type SetsPageFetchedAction = {|
-  type: typeof SETS_PAGE_FETCHED,
-  payload: SetsPageFetchedPayload
-|};
+export type PageFetchedAction = {
+  type: typeof PAGE_FETCHED,
+  payload: PageFetchedPayload
+};
 
-export function setsPageFetched(
-  payload: SetsPageFetchedPayload
-): SetsPageFetchedAction {
+export function pageFetched(payload: PageFetchedPayload): PageFetchedAction {
   return {
-    type: SETS_PAGE_FETCHED,
+    type: PAGE_FETCHED,
     payload
   };
 }
 
-type SetCurrentPageForSetPayload = {
-  page: number
+type SetCurrentPagePayload = {
+  page: number,
+  search: string
 };
 
-export type SetCurrentPageForSetAction = {
-  type: typeof SET_CURRENT_PAGE_FOR_SETS,
-  payload: SetCurrentPageForSetPayload
+export type SetCurrentPageAction = {
+  type: typeof SET_CURRENT_PAGE,
+  payload: SetCurrentPagePayload
 };
 
-export function setCurrentPageForSets(
-  payload: SetCurrentPageForSetPayload
-): SetCurrentPageForSetAction {
+export function setCurrentPage(
+  payload: SetCurrentPagePayload
+): SetCurrentPageAction {
   return {
-    type: SET_CURRENT_PAGE_FOR_SETS,
+    type: SET_CURRENT_PAGE,
     payload
   };
 }

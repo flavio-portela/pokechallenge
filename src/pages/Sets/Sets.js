@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  selectSetsPageNumber,
-  selectSetsCurrentPage
+  selectPage,
+  selectCurrentPageNumber
 } from '../../redux/reducers/pagination';
 import { selectSets } from '../../redux/reducers/sets';
 import { fetchSets } from '../../redux/actions/setsActions';
@@ -14,10 +14,12 @@ import styles from './Sets.styles';
 
 const Sets = () => {
   const dispatch = useDispatch();
-  const currentPage = useSelector(selectSetsPageNumber);
-  const page = useSelector(selectSetsCurrentPage);
+  const currentPage = useSelector(state =>
+    selectCurrentPageNumber(state, 'sets')
+  );
+  const page = useSelector(state => selectPage(state, currentPage, 'sets'));
+  console.log(page)
   const sets = useSelector(selectSets);
-
   useEffect(() => {
     dispatch(fetchSets({ page: currentPage }));
   }, []);
@@ -25,14 +27,20 @@ const Sets = () => {
   return (
     <div css={styles}>
       <div>
-        <button onClick={() => {
-          dispatch(fetchSets({ page: currentPage - 1 }))
-        }}>Previous</button>
-        <button onClick={() => {
-          dispatch(fetchSets({ page: currentPage + 1}))
-        }}>Next</button>
+        <button
+          onClick={() => {
+            dispatch(fetchSets({ page: currentPage - 1 }));
+          }}>
+          Previous
+        </button>
+        <button
+          onClick={() => {
+            dispatch(fetchSets({ page: currentPage + 1 }));
+          }}>
+          Next
+        </button>
       </div>
-      <div className='sets'>
+      <div className="sets">
         {page &&
           page.ids &&
           page.ids.map(id => {

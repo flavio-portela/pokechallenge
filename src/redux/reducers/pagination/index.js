@@ -1,17 +1,24 @@
 // @flow
 import pagination from './pagination';
 
-export function selectSetsPage(state: any, page: number) {
-  return state.pagination.sets.pages[page];
+export function selectPage(state: any, page: number, search: string) {
+  try{
+    const { pagination } = state;
+    const pages = pagination[search];
+    return pages[page];
+  }catch(error){
+    return null;
+  }
+  
 }
 
-export function selectSetsPageNumber(state: any) {
-  return state.pagination.sets.currentPage;
+export function selectCurrentPageNumber(state: any, search: string) {
+  try{
+    return state.pagination[search].currentPage;
+  }catch(error){
+    return 1;
+  }
 }
 
-export function selectSetsCurrentPage(state: any) {
-  const currentPage = selectSetsPageNumber(state);
-  return state.pagination.sets.pages[currentPage];
-}
 
 export default pagination;

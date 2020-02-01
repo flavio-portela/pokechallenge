@@ -6,15 +6,11 @@ import pokemon from '../../../services/pokemon';
 
 import { setsFetched, type FetchSetsAction } from '../../actions/setsActions';
 import {
-  requestSetsPage,
-  setsPageFetched,
-  setCurrentPageForSets
+  requestPage,
+  pageFetched,
+  setCurrentPage
 } from '../../actions/paginationActions';
-
-import {
-  selectSetsPage,
-  selectSetsCurrentPage
-} from '../../reducers/pagination';
+import { selectPage } from '../../reducers/pagination';
 
 export default function* fetchSets(action: FetchSetsAction): Saga<void> {
   try {
@@ -25,21 +21,22 @@ export default function* fetchSets(action: FetchSetsAction): Saga<void> {
       yield cancel();
     }
 
-    yield put(setCurrentPageForSets({ page }));
-    // Check if we already have this page
-    const nextPage = yield select(selectSetsPage, page);
-    if (nextPage) {
+    yield put(setCurrentPage({ page, search: 'sets' }));
+
+    // Check the current status of this page
+    const currentPage = yield select(selectPage, page, 'sets');
+    if (currentPage) {
       yield cancel();
     }
 
-    yield put(requestSetsPage({ page }));
+    yield put(requestPage({ page, search: 'sets' }));
 
     const response = yield call(pokemon.get, `/sets?page=${page}&pageSize=10`);
     const { sets } = response.data;
-
-    yield put(setsFetched(response.data.sets));
-
-    yield put(setsPageFetched({ ids: sets.map(set => set.code), page }));
+    yield put(setsFetched(sets));
+    yield put(
+      pageFetched({ page, ids: sets.map(set => set.code), search: 'sets' })
+    );
   } catch (error) {
     yield call(
       console.error,
