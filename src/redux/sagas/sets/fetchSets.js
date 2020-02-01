@@ -25,8 +25,6 @@ export default function* fetchSets(action: FetchSetsAction): Saga<void> {
 
     yield put(requestSetsPage({ page }));
 
-    console.log(existingPage);
-
     const response = yield call(pokemon.get, `/sets?page=${page}&pageSize=10`);
     const { sets } = response.data;
 

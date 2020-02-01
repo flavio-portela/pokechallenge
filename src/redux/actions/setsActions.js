@@ -23,11 +23,11 @@ export function fetchSets(payload: FetchSetsPayload): FetchSetsAction {
 export type SetsFetchedAction = {
   type: typeof FETCH_SETS_OK,
   payload: {
-    sets: Array<any>
+    sets: Array<PokeSet>
   }
 };
 
-export function setsFetched(sets: Array<any>): SetsFetchedAction {
+export function setsFetched(sets: Array<PokeSet>): SetsFetchedAction {
   return {
     type: FETCH_SETS_OK,
     payload: {

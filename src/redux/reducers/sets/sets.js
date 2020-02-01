@@ -1,7 +1,8 @@
 // @flow
 import { FETCH_SETS_OK } from '../../actions/setsActions';
 
-type SetsState = {[code: string]: any};
+type SetsState = {[code: string]: PokeSet};
+
 const initialState = {};
 
 export default function sets(state: SetsState = initialState, action: any) {
