@@ -18,7 +18,6 @@ const Sets = () => {
     selectCurrentPageNumber(state, 'sets')
   );
   const page = useSelector(state => selectPage(state, currentPage, 'sets'));
-  console.log(page)
   const sets = useSelector(selectSets);
   useEffect(() => {
     dispatch(fetchSets({ page: currentPage }));

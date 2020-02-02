@@ -2,13 +2,9 @@
 import { css } from '@emotion/core';
 
 export default css`
-  .sets {
+  .cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 10rem;
-    .setCard {
-      margin: 1rem;
-    }
   }
 `;
