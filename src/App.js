@@ -20,10 +20,10 @@ const App = () => {
           <Route exact path="/">
             <Sets />
           </Route>
-          <Route path="/cards/:setId">
+          <Route exact path="/cards/:setId">
             <Cards />
           </Route>
-          <Route path='/card/:id'>
+          <Route path='/cards/:setId/:id'>
             <Card />
           </Route>
         </Switch>

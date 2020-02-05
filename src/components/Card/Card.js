@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styles from './Card.styles';
 
 type Props = {
@@ -8,9 +8,10 @@ type Props = {
 };
 
 const Card = (props: Props) => {
+  const { setId } = useParams();
   const { card } = props;
   return (
-    <Link css={styles} to={`/card/${card.id}`}>
+    <Link css={styles} to={`/cards/${setId}/${card.id}`}>
       <img src={card.imageUrl} alt="Card image" />
     </Link>
   );

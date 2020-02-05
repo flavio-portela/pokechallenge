@@ -1,7 +1,8 @@
 // @flow
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, Link } from 'react-router-dom';
+import { SkipPrevious } from '@material-ui/icons';
 
 import Card from '../../components/Card';
 import Pagination from '../../components/Pagination';
@@ -40,6 +41,9 @@ const Cards = () => {
 
   return (
     <div css={styles}>
+      <Link className="backLink" to="/">
+        <SkipPrevious fontSize="large" color="primary" />
+      </Link>
       <Pagination
         currentPage={currentPage}
         onPrevious={() => {
