@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './Card.styles';
 type Props = {
-  card: any
+  card: PokeCard
 };
 
 const Card = (props: Props) => {

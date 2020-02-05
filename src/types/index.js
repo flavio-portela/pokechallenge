@@ -10,4 +10,8 @@ type PokeSet = {
   symbolUrl: string,
   logoUrl: string,
   updatedAt: string
-}
+};
+
+type PokeCard = {
+  imageUrl: string
+};

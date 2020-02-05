@@ -1,8 +1,6 @@
 // @flow
-export const START_FETCHING_CARDS = 'CARDS/START_FETCHING_CARDS';
-export const FETCH_CARDS = 'CARDS/FETCH_CARDS_ASYNC';
+export const START_FETCHING_CARDS = 'CARDS/FETCH_CARDS_XHR';
 export const FETCH_CARDS_OK = 'CARDS/FETCH_CARDS_OK';
-export const FETCH_CARDS_ERROR = 'CARDS/FETCH_CARDS_ERROR';
 
 type FetchCardsPayload = {|
   page: number,
@@ -17,22 +15,18 @@ export type FetchCardsAction = {|
 export function fetchCards(payload: FetchCardsPayload) {
   return {
     type: START_FETCHING_CARDS,
-    payload
-  };
-}
-
-export type CardsFetchedAction = {|
-  type: typeof FETCH_CARDS_OK,
-  payload: {
-    cards: Array<any>
-  }
-|};
-
-export function cardsFetched(cards: Array<any>) {
-  return {
-    type: FETCH_CARDS_OK,
     payload: {
-      cards
+      params: {
+        ...payload,
+        pageSize: 10
+      },
+      url: '/cards',
+      method: 'GET',
+      paginated: true,
+      searchKey: `cards-${payload.setCode}`,
+      getIds: (data: any) => {
+        return data.cards.map(card => card.id);
+      }
     }
   };
 }

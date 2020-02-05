@@ -25,7 +25,12 @@ const Cards = () => {
   const cards = useSelector(selectCards);
 
   useEffect(() => {
-    dispatch(fetchCards({ page: 1, setCode: setId }));
+    dispatch(
+      fetchCards({
+        page: currentPage,
+        setCode: setId
+      })
+    );
   }, []);
 
   return (
