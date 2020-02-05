@@ -1,9 +1,11 @@
 // @flow
-import { css } from "@emotion/core";
+import { css } from '@emotion/core';
 
 export default css`
   html {
-    font-family: sans-serif;
     font-size: 62.5%;
+  }
+  body {
+    font-family: 'Roboto', sans-serif;
   }
 `;

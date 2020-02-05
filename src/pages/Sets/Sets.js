@@ -10,6 +10,7 @@ import { selectSets } from '../../redux/reducers/sets';
 import { fetchSets } from '../../redux/actions/setsActions';
 
 import SetCard from '../../components/SetCard';
+import Pagination from '../../components/Pagination';
 import styles from './Sets.styles';
 
 const Sets = () => {
@@ -19,26 +20,20 @@ const Sets = () => {
   );
   const page = useSelector(state => selectPage(state, currentPage, 'sets'));
   const sets = useSelector(selectSets);
+  const goToPage = page => {
+    dispatch(fetchSets({ page }));
+  };
   useEffect(() => {
-    dispatch(fetchSets({ page: currentPage }));
+    goToPage(currentPage);
   }, []);
 
   return (
     <div css={styles}>
-      <div>
-        <button
-          onClick={() => {
-            dispatch(fetchSets({ page: currentPage - 1 }));
-          }}>
-          Previous
-        </button>
-        <button
-          onClick={() => {
-            dispatch(fetchSets({ page: currentPage + 1 }));
-          }}>
-          Next
-        </button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        onNext={() => goToPage(currentPage + 1)}
+        onPrevious={() => goToPage(currentPage - 1)}
+      />
       <div className="sets">
         {page &&
           page.ids &&

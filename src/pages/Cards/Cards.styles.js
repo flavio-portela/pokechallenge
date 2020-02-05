@@ -6,5 +6,6 @@ export default css`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 1rem;
   }
 `;

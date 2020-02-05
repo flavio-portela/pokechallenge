@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
 import Card from '../../components/Card';
+import Pagination from '../../components/Pagination';
 import { selectCards } from '../../redux/reducers/cards';
 import { fetchCards } from '../../redux/actions/cardsActions';
 import {
@@ -24,31 +25,30 @@ const Cards = () => {
   );
   const cards = useSelector(selectCards);
 
-  useEffect(() => {
+  const goToPage = page => {
     dispatch(
       fetchCards({
-        page: currentPage,
+        page,
         setCode: setId
       })
     );
+  };
+
+  useEffect(() => {
+    goToPage(currentPage);
   }, []);
 
   return (
     <div css={styles}>
-      <div>
-        <button
-          onClick={() => {
-            dispatch(fetchCards({ page: currentPage - 1, setCode: setId }));
-          }}>
-          Previous
-        </button>
-        <button
-          onClick={() => {
-            dispatch(fetchCards({ page: currentPage + 1, setCode: setId }));
-          }}>
-          Next
-        </button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        onPrevious={() => {
+          goToPage(currentPage - 1);
+        }}
+        onNext={() => {
+          goToPage(currentPage + 1);
+        }}
+      />
       <div className="cards">
         {page &&
           page.ids &&
