@@ -14,15 +14,27 @@ const fetchingMiddleware = (store: any) => (next: any) => (action: any) => {
   }
 
   const { payload } = action;
-  const { url, method, params, paginated, searchKey, getIds, parseResponse } = payload;
+  const {
+    url,
+    method,
+    params = {},
+    paginated,
+    searchKey,
+    getIds,
+    parseResponse,
+    selector
+  } = payload;
   const { page } = params;
+
+  if (selector && selector(store.getState())) {
+    return;
+  }
 
   if (paginated) {
     if (page < 1) {
       return;
     }
     const currentPage = selectPage(store.getState(), page, searchKey);
-
     // Avoid requesting the page if it is already loading
     if (currentPage) {
       const { isLoading } = currentPage;
@@ -47,16 +59,16 @@ const fetchingMiddleware = (store: any) => (next: any) => (action: any) => {
   }).then(response => {
     const { status, data } = response;
     if (status === 200) {
-      // Check if we had a response back
-      const ids = getIds(data);
-      if (!ids.length) {
-        return;
-      }
       next({
         type: type.replace('XHR', 'OK'),
         payload: data
       });
       if (paginated) {
+        // Check if we had a response back
+        const ids = getIds(data);
+        if (!ids.length) {
+          return;
+        }
         next(
           pageFetched({
             page,

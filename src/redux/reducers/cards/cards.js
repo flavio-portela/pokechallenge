@@ -1,5 +1,5 @@
 // @flow
-import { FETCH_CARDS_OK } from '../../actions/cardsActions';
+import { FETCH_CARDS_OK, FETCH_CARD_OK } from '../../actions/cardsActions';
 
 type CardsState = { [id: string]: any };
 
@@ -17,6 +17,13 @@ export default function cards(state: CardsState = initialState, action: any) {
       return {
         ...state,
         ...newCards
+      };
+    }
+    case FETCH_CARD_OK: {
+      const { card } = action.payload;
+      return {
+        ...state,
+        [card.id]: card
       };
     }
     default:

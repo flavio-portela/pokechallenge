@@ -23,6 +23,9 @@ const App = () => {
           <Route path="/cards/:setId">
             <Cards />
           </Route>
+          <Route path='/card/:id'>
+            <Card />
+          </Route>
         </Switch>
       </Router>
     </Provider>

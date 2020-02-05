@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Card.styles';
+
 type Props = {
   card: PokeCard
 };
@@ -8,9 +10,9 @@ type Props = {
 const Card = (props: Props) => {
   const { card } = props;
   return (
-    <div css={styles}>
+    <Link css={styles} to={`/card/${card.id}`}>
       <img src={card.imageUrl} alt="Card image" />
-    </div>
+    </Link>
   );
 };
 

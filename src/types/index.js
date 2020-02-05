@@ -13,5 +13,6 @@ type PokeSet = {
 };
 
 type PokeCard = {
+  id: string,
   imageUrl: string
 };
