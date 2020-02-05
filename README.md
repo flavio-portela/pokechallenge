@@ -9,3 +9,5 @@
 ## Scripts
 - `npm run flow` / `npm run flow:watch`: check for flow typing errors.
 - `npm run build` :create assets for production.
+
+## API credit to [Pokémon TCG Developers](https://pokemontcg.io/)
